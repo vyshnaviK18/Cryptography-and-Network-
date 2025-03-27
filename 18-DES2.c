@@ -27,7 +27,8 @@ int PC2[] = { 14, 17, 11, 24,  1,  5,  3, 28, 15,  6, 21, 10,
 
 // Function to apply a permutation table
 void applyPermutation(uint8_t *input, uint8_t *output, int *table, int size) {
-    for (int i = 0; i < size; i++) {
+	int i;
+    for ( i = 0; i < size; i++) {
         int bitPos = table[i] - 1;
         int bytePos = bitPos / 8;
         int bitOffset = bitPos % 8;
@@ -60,8 +61,9 @@ void generateSubkeys(uint8_t initialKey[8], uint8_t subkeys[NUM_ROUNDS][6]) {
     memcpy(C, permutedKey, 4);
     applyPermutation(initialKey, permutedKey, PC1_Right, 28);
     memcpy(D, permutedKey, 4);
+    int i;
 
-    for (int i = 0; i < NUM_ROUNDS; i++) {
+    for ( i = 0; i < NUM_ROUNDS; i++) {
         leftShift28(C, keyShifts[i]);
         leftShift28(D, keyShifts[i]);
 
@@ -81,9 +83,10 @@ int main() {
     generateSubkeys(initialKey, subkeys);
 
     printf("Generated DES Subkeys:\n");
-    for (int i = 0; i < NUM_ROUNDS; i++) {
+    int i,j;
+    for ( i = 0; i < NUM_ROUNDS; i++) {
         printf("K%d: ", i + 1);
-        for (int j = 0; j < 6; j++) {
+        for ( j = 0; j < 6; j++) {
             printf("%02X ", subkeys[i][j]);
         }
         printf("\n");
